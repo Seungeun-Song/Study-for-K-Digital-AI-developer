@@ -1,4 +1,4 @@
-* command prompt 창에서 접근 명령어 - mysql -u(user) root -p
+* command prompt 창에서 접근 명령어  => mysql -u(user) root -p => use sqldb
 
 * <NoSQL 운영 경험이 있는 분 = 분산 서버(DB)를 운영해본 경험이 있는지O, NoSQL의 개념을 아는지X>
 
