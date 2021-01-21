@@ -100,7 +100,7 @@ SELECT num, CONCAT(CAST(price AS CHAR(10)), 'X', CAST(amount AS CHAR(4)) ,'=' ) 
 
 ### 7-3 조인
 
-#### 7-3-1. INNER JOIN - 내부조인 (교집합X --> 연결되어 있는 부분)
+#### 7-3-1. INNER JOIN - 내부조인 (교집합X --> 링크되어 있는 부분)
 
 ```mariadb
 SELECT 열 목록 
@@ -177,7 +177,7 @@ SELECT u.userid, u.name, u.addr
 
 
 
-#### 7-3-2. OUTER JOIN(차집합X --> 연결되지 않은 부분)
+#### 7-3-2. OUTER JOIN(차집합X --> 링크되지 않은 부분도 전부)
 
 **LEFT/ RIGHT OUTERJOIN에 따라 차집합의 값이 달라짐**
 
