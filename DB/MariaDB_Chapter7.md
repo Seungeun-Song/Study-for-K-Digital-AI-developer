@@ -172,7 +172,8 @@ SELECT u.userid, u.name, u.addr
 
 ```mariadb
 -- 학생 기준으로 학생 이름 / 지역/ 가입 동아리/ 동아리방을 출력
-
+ALTER TABLE stdclubtbl
+	ADD CONSTRAINT FK_clubname FOREIGN KEY (clubname) REFERENCES clubtbl(clubname);
 ```
 
 
@@ -360,4 +361,6 @@ DEALLOCATE PREPARE myQuery;
 SELECT * FROM myTable;
 
 ```
+
+
 
