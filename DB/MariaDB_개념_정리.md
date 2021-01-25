@@ -57,7 +57,7 @@
 
 > ## **데이터 생성**
 >
-> * **INSERT INTO       VALUES** 
+> * **INSERT INTO 테이블명 VALUES( , , )** 
 >
 > ```mariadb
 > INSERT INTO clubtbl VALUES('수영','101호');
@@ -78,7 +78,7 @@
 > INSERT INTO stdtbl VALUES('은지원','경북');
 > INSERT INTO stdtbl VALUES('바비킴','서울');
 > ```
-> * **UPDATE SET            WHERE**
+> * **UPDATE  테이블명  SET  수정값  WHERE  조건**
 >
 > ```mariadb
 > UPDATE stdtbl
@@ -127,6 +127,11 @@
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_clubName
 >   		FOREIGN KEY stdclubtbl(clubname) REFERENCES clubtbl(clubname);
+>   		
+>   -- PRIMARY KEY 삭제
+>   ALTER TABLE 테이블명
+>   	DROP PRIMARY KEY,
+>   	CHANGE id id_no INT NOT NULL; -- AUTO_INCREMENT 삭제 = 컬럼명과 형태 변경, 
 >   ```
 >   
 > * **인덱스 생성**
@@ -142,11 +147,26 @@
 >    -- 인덱스를 이용해 찾았다는 type ='ref'가 나타난다 key = 'idx_addr'
 > 
 >   SHOW INDEX FROM stdtbl;
+>   
+>   -- 인덱스 삭제
+>   DROP INDEX 인덱스 이름 ON 테이블 이름;
+>   
 >   ```
 
 ---
 
 > ## **데이터 조회와 활용**
+>
+> ```mariadb
+> SHOW TABLES;
+> SHOW TABLE STATUS;
+> 
+> EXPLAIN SELECT * FROM stdtbl;
+>  
+> describe 테이블명;
+> ```
+>
+> 
 >
 > * **WHERE**
 >
