@@ -99,7 +99,7 @@
 >   	DROP COLUMN height;
 >   ```
 >
->   
+> 
 >
 > * **ALTER**
 >
@@ -107,15 +107,15 @@
 >   -- 열 삽입
 >   ALTER TABLE	stdtbl
 >   	ADD height INT NOT NULL;
->   	
+>
 >   -- 열 이름 및 데이터 형식 변경
 >   ALTER TABLE stdtbl
 >   	CHANGE COLUMN height tall INT NULL;
 >   ```
 >
->   
+> 
 >
->   
+> 
 >
 > * **제약조건 만들기**
 >
@@ -123,24 +123,24 @@
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_name 
 >   		FOREIGN KEY stdclubtbl(stdName) REFERENCES stdtbl(stdName);
->   		
+>
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_clubName
 >   		FOREIGN KEY stdclubtbl(clubname) REFERENCES clubtbl(clubname);
->   
->   
 >   ```
->
+>   
 > * **인덱스 생성**
 >
+>
+>   ```mariadb
 >   ```mariadb
 >   CREATE INDEX idx_addr ON stdtbl(addr);
->   
+> 
 >   EXPLAIN SELECT * FROM stdtbl WHERE stdName='조용필';
 >   -- key = 'primary key', type = const
 >   EXPLAIN SELECT * FROM stdtbl WHERE addr = '서울';
 >    -- 인덱스를 이용해 찾았다는 type ='ref'가 나타난다 key = 'idx_addr'
->    
+> 
 >   SHOW INDEX FROM stdtbl;
 >   ```
 
@@ -163,7 +163,7 @@
 >   select * FROM stdtbl WHERE height <= ANY (SELECT height FROM stdtbl WHERE addr = '서울');
 >   ```
 >
->   
+> 
 >
 > * **ORDER BY**
 >
@@ -184,25 +184,25 @@
 >   SELECT * FROM stdtbl ORDER BY height DESC	LIMIT 3;
 >   ```
 >
->   
+> 
 >
 > * **연산자**
 >
 >   ```mariadb
 >   SELECT * FROM stdtbl 
 >   	WHERE height > (SELECT height FROM stdtbl WHERE stdNAME = '은지원');
->   	
+>
 >   SELECT * FROM stdtbl 
 >   	WHERE height > (SELECT height FROM stdtbl WHERE addr = '경기');
 >   ```
 >
->   
+> 
 >
 > * **GROUP BY**
 >
 >   ```mariadb
 >   SELECT * FROM stdclubtbl GROUP BY clubname;
->   
+>
 >   SELECT userID, SUM(amount) FROM buyTbl GROUP BY userID;
 >   ```
 >
@@ -212,6 +212,16 @@
 >   SELECT userID AS '사용자 아이디', SUM(amount) AS '총 구매개수' FROM buytbl GROUP BY userID;
 >   ```
 >
+>   ```mariadb
+>   SELECT B.userID, U.name, B.prodname, U.addr, CONCAT(mobile1,mobile2) AS '연락처'
+>   	FROM buytbl B
+>   	INNER JOIN usertbl U 
+>   	 ON B.userID = U.userID
+>   	 	 ORDER BY B.name ;
+>   ```
+>
+>   
+>
 > * **집계 함수** - AVG(), MIN(), MAX(), COUNT(), COUNT(DISTINCT)
 >
 >   ```mariadb
@@ -219,12 +229,12 @@
 >   SELECT stdNAME, height FROM stdtbl 
 >   	WHERE height = (SELECT MAX(height) FROM stdtbl) 
 >   		OR height = (SELECT MIN(height) FROM stdtbl);
->   		
+>
 >   -- COUNT
 >   SELECT COUNT(*) FROM stdtbl;
 >   ```
 >
->   
+> 
 >
 > * **HAVING** -  집계함수에서의 조건절 (집계함수와 where는 함께 할 수 X)
 >
@@ -234,17 +244,143 @@
 >
 > * **CHECK**
 >
->   
+> 
 
+---
 
-
+> ### 인덱스, 뷰, 스토어드 프로시저, 트리거 등의 활용
+>
 > * **뷰**
+>
+>   ```mariadb
+>   CREATE VIEW userview_membertbl 
+>   	AS SELECT membername, memberaddress FROM membertbl;
+>   ```
+>
+>   
+>
 > * **스토어드 프로시저**
+>
+>   ```mariadb
+>   DELIMITER $$
+>   CREATE PROCEDURE userproc2(
+>   	IN userbirth INT,
+>   	IN userheight INT
+>   )
+>   BEGIN 
+>   	SELECT * FROM usertbl
+>   		WHERE birthyear>userbirth AND height > userheight;
+>   END $$
+>   DELIMITER ;
+>   
+>   CALL userproc2(1970,178);
+>   ```
+>
+> * **트리거**
+>
+>   ```mariadb
+>   CREATE TABLE deletednametbl(
+>   	NAME CHAR(8),
+>   	addr CHAR(20),
+>   	tall INT,
+>   	deletedDate date
+>   );
+>   
+>   
+>   DELIMITER//
+>   CREATE TRIGGER trg_deletedmembertbl    -- 트리거 이름
+>   	AFTER DELETE	
+>   	ON stdtbl									-- 트리거를 부착할 테이블
+>   	FOR EACH ROW
+>   BEGIN
+>   	INSERT INTO deletednametbl				-- OLD 테이블의 내용을 백업 테이블에 삽입
+>   		VALUES(OLD.stdname, OLD.addr, OLD.tall, CURDATE());
+>   END //
+>   DELIMITER ;		
+>   	
+>   
+>   ```
+>
+> * **INNER JOIN** - 두 개 이상의 테이블을 서로 묶어서 하나의 결과집합으로 만들어내는 것
+>
+>   ```mariadb
+>   select 열 목록
+>   from 첫번째 테이블
+>   	inner join 두번째 테이블
+>   	on 조인될 조건
+>   where 검색조건
+>   ```
+>
+>   ```mariadb
+>   -- 세 개 이상 테이블 조인
+>   SELECT S.stdname, S.addr, C.clubname, C.roomno
+>   	FROM stdtbl S
+>   		INNER JOIN stdclubtbl SC
+>   			ON S.stdName = SC.stdName
+>   		INNER JOIN clubtbl C
+>   			ON SC.clubname = C.clubname
+>   	ORDER BY S.stdname;
+>   ```
+>
+>   
+>
 > * **캐스케이드**
+
+
+
+
 
 >```mariadb
 >-- 기존의 테이블을 새롭게 복사
 >CREATE TABLE new (SELECT stdname, height FROM stdtbl);
 >```
 >
+>* **SQL프로그래밍**
 >
+>  * **CASE**
+>
+>    ```mariadb
+>    SELECT NAME, SUM(price*amount),
+>    	case
+>    		when (SUM(price*amount) >= 1500) then '최우수고객'
+>    	    when (SUM(price*amount) >= 1000) then '우수고객'
+>    	    when (SUM(price*amount) >= 1) then '일반고객'
+>    	    ELSE '유령고객'
+>    	END AS '고객등급'
+>    	  
+>    	FROM buytbl
+>    		RIGHT OUTER JOIN usertbl
+>    			ON buytbl.userID = usertbl.userID
+>    	GROUP BY name
+>    	ORDER BY SUM(price*amount) DESC;
+>    ```
+>
+>  * **IF ... ELSE**
+>
+>    ```mariadb
+>    DELIMITER  $$
+>    CREATE PROCEDURE ifProc2()
+>    BEGIN
+>    	DECLARE hiredate DATE;  -- 입사일
+>    	DECLARE CURDATE DATE;   -- 오늘
+>    	DECLARE days INT;       -- 근무한 일수	
+>    	
+>    	SELECT hire_date INTO hiredate  --hire_date열의 결과를 hiredate에 대입
+>    		FROM employees.employees
+>    		WHERE emp_no = 10001;
+>    		
+>    	SET CURDATE = CURRENT_DATE(); -- 현재 날짜
+>    	SET days = DATEDIFF(CURDATE, hiredate); -- 날짜의 차이, 일 단위
+>    	
+>    	if (days/365) >= 5 then -- 5년이 지났다면
+>    			SELECT CONCAT('입사한지',days,'일이나 지났습니다. 축하합니다!');
+>    	else
+>    			SELECT '입사한지' + days + '일밖에 안되었네요. 열심히 일하세요';
+>    	END if;
+>    END $$
+>    DELIMITER;
+>    CALL ifproc2();
+>    
+>    ```
+>
+>    
