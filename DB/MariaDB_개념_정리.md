@@ -123,17 +123,21 @@
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_name 
 >   		FOREIGN KEY stdclubtbl(stdName) REFERENCES stdtbl(stdName);
->
+>   
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_clubName
 >   		FOREIGN KEY stdclubtbl(clubname) REFERENCES clubtbl(clubname);
->   		
+>   
 >   -- PRIMARY KEY 삭제
 >   ALTER TABLE 테이블명
 >   	DROP PRIMARY KEY,
 >   	CHANGE id id_no INT NOT NULL; -- AUTO_INCREMENT 삭제 = 컬럼명과 형태 변경, 
+>   	
+>   -- Foreign key 삭제
+>   ALTER TABLE 테이블명
+>   	DROP CONSTRAINT 외래키명;
 >   ```
->   
+>
 > * **인덱스 생성**
 >
 >
@@ -147,10 +151,10 @@
 >    -- 인덱스를 이용해 찾았다는 type ='ref'가 나타난다 key = 'idx_addr'
 > 
 >   SHOW INDEX FROM stdtbl;
->   
+> 
 >   -- 인덱스 삭제
 >   DROP INDEX 인덱스 이름 ON 테이블 이름;
->   
+> 
 >   ```
 
 ---
@@ -160,6 +164,7 @@
 > ```mariadb
 > SHOW TABLES;
 > SHOW TABLE STATUS;
+> SHOW INDEX FROM stdtbl;
 > 
 > EXPLAIN SELECT * FROM stdtbl;
 >  
@@ -277,7 +282,7 @@
 >   	AS SELECT membername, memberaddress FROM membertbl;
 >   ```
 >
->   
+> 
 >
 > * **스토어드 프로시저**
 >
@@ -292,7 +297,7 @@
 >   		WHERE birthyear>userbirth AND height > userheight;
 >   END $$
 >   DELIMITER ;
->   
+>
 >   CALL userproc2(1970,178);
 >   ```
 >
@@ -305,8 +310,9 @@
 >   	tall INT,
 >   	deletedDate date
 >   );
->   
->   
+>   ```
+>
+>
 >   DELIMITER//
 >   CREATE TRIGGER trg_deletedmembertbl    -- 트리거 이름
 >   	AFTER DELETE	
@@ -317,12 +323,12 @@
 >   		VALUES(OLD.stdname, OLD.addr, OLD.tall, CURDATE());
 >   END //
 >   DELIMITER ;		
->   	
->   
+>
+>
 >   ```
->
+> 
 > * **INNER JOIN** - 두 개 이상의 테이블을 서로 묶어서 하나의 결과집합으로 만들어내는 것
->
+> 
 >   ```mariadb
 >   select 열 목록
 >   from 첫번째 테이블
@@ -342,7 +348,7 @@
 >   	ORDER BY S.stdname;
 >   ```
 >
->   
+> 
 >
 > * **캐스케이드**
 
