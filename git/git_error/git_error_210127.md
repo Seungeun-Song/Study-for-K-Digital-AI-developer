@@ -142,3 +142,11 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 ```
 
+
+
+### git 해결 
+
+```shell
+$git fetch origin
+```
+
