@@ -289,7 +289,7 @@
 >   ```mariadb
 >   DELIMITER $$
 >   CREATE PROCEDURE userproc2(
->   	IN userbirth INT,
+>   	IN userbirth INT,     -- 변수값의 개념
 >   	IN userheight INT
 >   )
 >   BEGIN 
@@ -311,24 +311,23 @@
 >   	deletedDate date
 >   );
 >   ```
->
->
->   DELIMITER//
->   CREATE TRIGGER trg_deletedmembertbl    -- 트리거 이름
->   	AFTER DELETE	
->   	ON stdtbl									-- 트리거를 부착할 테이블
->   	FOR EACH ROW
->   BEGIN
->   	INSERT INTO deletednametbl				-- OLD 테이블의 내용을 백업 테이블에 삽입
->   		VALUES(OLD.stdname, OLD.addr, OLD.tall, CURDATE());
->   END //
->   DELIMITER ;		
->
->
+>   
+>   ```mariadb
+>     DELIMITER//
+>     CREATE TRIGGER trg_deletedmembertbl    -- 트리거 이름
+>     	AFTER DELETE	
+>     	ON stdtbl									-- 트리거를 부착할 테이블
+>     	FOR EACH ROW
+>     BEGIN
+>     	INSERT INTO deletednametbl				-- OLD 테이블의 내용을 백업 테이블에 삽입
+>     		VALUES(OLD.stdname, OLD.addr, OLD.tall, CURDATE());
+>     END //
+>     DELIMITER ;
 >   ```
-> 
-> * **INNER JOIN** - 두 개 이상의 테이블을 서로 묶어서 하나의 결과집합으로 만들어내는 것
-> 
+>
+> *  **INNER JOIN** - 두 개 이상의 테이블을 서로 묶어서 하나의 결과집합으로 만들어내는 것
+>
+>
 >   ```mariadb
 >   select 열 목록
 >   from 첫번째 테이블
@@ -343,6 +342,7 @@
 >   	FROM stdtbl S
 >   		INNER JOIN stdclubtbl SC
 >   			ON S.stdName = SC.stdName
+>   	 	-- WHERE S.stdname = '공유';
 >   		INNER JOIN clubtbl C
 >   			ON SC.clubname = C.clubname
 >   	ORDER BY S.stdname;
@@ -363,16 +363,16 @@
 >
 >* **SQL프로그래밍**
 >
->  * **CASE**
+>  * **CASE** - if구문과 유사
 >
 >    ```mariadb
->    SELECT NAME, SUM(price*amount),
+>    SELECT NAME, SUM(price*amount),  
 >    	case
 >    		when (SUM(price*amount) >= 1500) then '최우수고객'
 >    	    when (SUM(price*amount) >= 1000) then '우수고객'
 >    	    when (SUM(price*amount) >= 1) then '일반고객'
 >    	    ELSE '유령고객'
->    	END AS '고객등급'
+>    	END AS '고객등급'     -- case 구문을 추가
 >    	  
 >    	FROM buytbl
 >    		RIGHT OUTER JOIN usertbl
