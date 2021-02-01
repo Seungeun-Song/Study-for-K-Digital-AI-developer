@@ -123,20 +123,29 @@
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_name 
 >   		FOREIGN KEY stdclubtbl(stdName) REFERENCES stdtbl(stdName);
->   
+>
 >   ALTER TABLE stdclubtbl
 >   	ADD CONSTRAINT FK_clubName
 >   		FOREIGN KEY stdclubtbl(clubname) REFERENCES clubtbl(clubname);
->   
+>
 >   -- PRIMARY KEY 삭제
 >   ALTER TABLE 테이블명
 >   	DROP PRIMARY KEY,
 >   	CHANGE id id_no INT NOT NULL; -- AUTO_INCREMENT 삭제 = 컬럼명과 형태 변경, 
->   	
+>
 >   -- Foreign key 삭제
 >   ALTER TABLE 테이블명
 >   	DROP CONSTRAINT 외래키명;
 >   ```
+>
+> * **외래키명 확인하기**
+>
+>   ```mariadb
+>   SELECT * FROM information_schema.TABLE_CONSTRAINTS 
+>   	WHERE TABLE_NAME = 'comment_board';
+>   ```
+>
+>   
 >
 > * **인덱스 생성**
 >
