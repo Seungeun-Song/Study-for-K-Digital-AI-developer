@@ -89,7 +89,10 @@ nothing added to commit but untracked files present (use "git add" to track)
 	* untracked files : 추적되지 않은 파일이 있다. (어떤 파일)
 	* nothing added to commit but untracked files present : 커밋을 위해 staging area에 add된 파일은 없고, 추적되지 않은 파일은 있다.
 
-
+```shell
+* git 삭제
+rm -r .git 
+```
 
 ### (4) Commit을 위한 Staging : `git add [파일명]`
 
