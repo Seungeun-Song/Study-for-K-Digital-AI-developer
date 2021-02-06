@@ -1,0 +1,27 @@
+<h2>{{object.title}}</h2>
+
+<p>
+	{% if object.get_previous %}
+	<!-- get_previous.get_absolute_url 함수를 지징하는 URL 패턴을 반환한다. -->
+	<!-- &laquo; 는 HTML 특수문자 '<<<' 를 의미한다.  -->
+	<a href="{object.get_previous.get_absolute_url}" title="View previous post">&laquo;- {{object.get_previous}}</a>
+
+	{% endif %}
+
+	{% if object.get_next %}
+	<!-- get_next.get_absolute_url 함수를 지칭하는 URL 패넡을 반환한다. -->
+	<!-- &raquo; 는 HTML 특수문자 '>>>'를 의미한다.  -->
+	| <a href="{{object.get_next.get_absolute_url}}" title="View next post">{{object.get_next}} -&raquo;</a>
+
+	{% endif %}
+
+</p>
+
+<!-- modify_dt 속성값을 j F Y 로  포맷으로 출력한다. -->
+<p>{{object.modify_dt|date:"j F Y"}}</p>
+<br>
+
+<!-- linebrearks 템플릿 필터는 \n 을 인식하게 한다. -->
+<div>
+	{{object.content|linebreaks}}
+</div>
