@@ -1,0 +1,21 @@
+<h1>Post Archive for {{year|date:"Y"}}</h1>
+
+<ul>
+	{% for date in date_list %}
+	<li style="display: inline;">
+		<!-- 월 메뉴는 'F' 즉 July 같은 텍스트로 수정된 포스트를 보여주는 URL이 링크되어있다. -->
+		<a href="{% url 'blog:post_month_archive' year|date:'Y' date|date:'b' %}">{{date|date:"F"}}</a>
+	</li>
+	{% endfor %}
+</ul>
+<br>
+
+<div>
+	<ul>
+		{% for post in object_list %}
+		<li>{{post.modify_dt|date:"Y-m-d"}}&nbsp;&nbsp;&nbsp;
+			<a href="{{post.get_absolute_url}}"><strong>{{post.title}}</strong></a>
+		</li>
+		{% endfor %}
+	</ul>
+</div>
