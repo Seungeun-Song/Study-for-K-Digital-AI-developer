@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device=width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>roof</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    {% block extra-style %}{% endblock extra-style %}
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .blind {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+        }
+        a {
+            text-decoration: none;
+        }
+        .side_toggle_btn::before {
+            content: ">";
+            display: inline-block;
+            width: 50px;
+            line-height: 50px;
+            font-size: 24px;
+            text-align: center;
+        }
+        .side_input:checked + .side_toggle_btn::before {
+            content: "<";
+        }
+        .side_input:checked ~ .side_list {
+            left: 0;
+        }
+        .side_list {
+            position: absolute;
+            left: -200px;
+            top: 100px;
+            bottom: 0;
+            width: 200px;
+            font-size: 24px;
+            transition: 0.3s ease-in;
+            text-align: center;
+        }
+        .navbar-brand{
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+        {% load static %}
+            <div id="" a class="navbar-brand">Navbar</a></div>
+            <form class="d-flex" action="search/" method="post"> {% csrf_token %}
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_word">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+        <input type="checkbox" id="side_btn" class="side_input blind" />
+        <label for="side_btn" class="side_toggle_btn"></label>
+        <div id="list-example" class="side_list">
+            <a class="list-group-item list-group-item-action" href="#list-item-2">Item 1</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">Item 2</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">Item 3</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">Item 4</a>
+        </div>
+        <div>
+            Hello
+        </div>
+</body>
+</html>
+
