@@ -116,6 +116,13 @@ Changes to be committed:
 
 
 
+* **git add 취소**
+
+```
+git reset (전체 파일 add 취소)
+git reset HEAD 파일 (특정 파일 add 취소)
+```
+
 ### (5) 버전 관리를 위한 스냅샷 저장 : `git commit -m [커밋 메시지]`
 
 * 현재 상태에 대한 스냅샷으로 `commit`하여, 버전 관리를 진행한다.
