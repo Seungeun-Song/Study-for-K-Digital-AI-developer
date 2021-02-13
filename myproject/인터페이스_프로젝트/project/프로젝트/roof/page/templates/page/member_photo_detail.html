@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+{% endblock %}
+
+
+
+{% load static %}
+
+
+
+{% block extra-style %}
+<link rel="stylesheet" href="{% static 'assets/css/main2.css' %}" />
+{% endblock extra-style %}
+
+
+
+{% block content %}
+
+
+    <article id="one" class="post style1">
+        <div class="image">       
+            <img src="{% static 'img/home.jpg' %}" alt="" data-position="75% center" />
+        </div>
+        <div class="content">
+            <div class="inner">
+                <header>
+                    <h2><a href="generic.html">hello</a></h2>
+                    <p class="info">3 days ago by <a href="#">Jane Doe</a></p>
+                </header>
+                <p>마리오 공략</p>
+                <ul class="actions">
+                    <li><a href="generic.html" class="button alt">Read More</a></li>
+                </ul>
+            </div>
+            
+        </div>
+    </article>
+
+{% endblock content %}
+
+{% block jsfile %}
+    <script src="{% static 'assets/js/jquery.min2.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+    <script src="{% static 'assets/js/skel.min.js' %}"></script>
+    <script src="{% static 'assets/js/util2.js' %}"></script>
+    <script src="{% static 'assets/js/main2.js' %}"></script>
+{% endblock %}

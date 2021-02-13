@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}search
+{% endblock %}
+
+{% block extra-style %}
+{% endblock extra-style %}
+
+
+{% block content %}
+
+    <h1>Page Search</h1>
+    <br>
+
+    <form action="." method="post"> {% csrf_token %}
+        {{ form.as_table }}
+        <input type="submit" value="Submit" class="btn btn-primary btn-sm">
+    </form>
+
+    <br/><br/>
+
+    {% if object_list %}
+        {% for post in object_list %}
+        <h2><a href='#'>{{ post.title }}</a></h2>
+        {% endfor %}
+
+    {% elif search_term %}
+    <b><i>Search Word({{ search_term }}) Not Found !</i></b>
+    {% endif %}
+
+
+{% endblock content %}
+
+{% block jsfile %}
+{% endblock %}

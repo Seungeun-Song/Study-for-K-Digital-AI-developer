@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}tag
+{% endblock %}
+
+{% block extra-style %}
+{% endblock extra-style %}
+
+{% block content %}
+    <header>
+		<h1>Tag: {{ tagname }}</h1>
+		<p>#</p>
+	</header>
+	<section class="tiles">
+		{% for post in object.post_set.all %}
+		    <article class="style1">
+		    	<span class="image">
+		    		<img src="{% static 'images/pic01.jpg' %}" alt="" />
+		    	</span>
+		    	<a href="{% url 'page:member_post_detail' post.member post.category post.slug %}">
+		    		<h2>{{ post.title }}</h2>
+			    	<div class="content">
+			    		<p>#</p>
+			    	</div>
+		    	</a>
+		    </article>
+		{% endfor %}
+	</section>
+{% endblock content %}
+
+{% block jsfile %}
+{% endblock %}

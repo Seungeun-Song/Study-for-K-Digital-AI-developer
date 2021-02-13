@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}photo
+{% endblock %}
+
+{% block extra-style %}
+{% endblock extra-style %}
+
+
+{% block content %}
+<h1>Generic Page</h1>
+    <div style="display:grid; grid-template-columns: 1fr 5px 1fr;">
+	    <div>
+            <span class="image main"><img src="{% static 'images/pic13.jpg' %}" alt="" /></span>
+	    </div>
+        <div></div>
+        <div style="border: 5px solid skyblue">
+            <h3>마리오 사진</h3>
+            <P>사진 설명 #asjflkjas;lfjas;lfj;alsjf;laskjf;lasj;lfkjas;lfj;l</p>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block jsfile %}
+{% endblock %}
