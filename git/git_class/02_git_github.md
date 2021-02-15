@@ -151,6 +151,17 @@ nothing to commit, working tree clean
 
 
 
+* **git commit 취소**
+
+  ```
+  git reset HEAD^  -- commit 취소, unstaged 상태로 working directory에 보존
+  git reset HEAD~2 -- 최근 것에서 뒤로 2개 commit 취소
+  -------------------------------------------------------------------------------
+  git reset --hard HEAD^  -- commit 취소, unstaged상태로 working directory에서 삭제
+  ```
+
+  
+
 ### (6) 버전 관리 이력을 조회 : `git log`
 
 * git으로 지금까지 저장된 커밋들의 로그(아이디)를 출력
