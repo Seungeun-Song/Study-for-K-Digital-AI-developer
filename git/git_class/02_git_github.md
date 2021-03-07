@@ -119,8 +119,8 @@ Changes to be committed:
 * **git add 취소**
 
 ```
-git reset (전체 파일 add 취소)
-git reset HEAD 파일 (특정 파일 add 취소)
+$ git restore --staged <파일명.확장자>
+
 ```
 
 ### (5) 버전 관리를 위한 스냅샷 저장 : `git commit -m [커밋 메시지]`
